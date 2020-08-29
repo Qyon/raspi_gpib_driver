@@ -29,7 +29,7 @@
 
 MODULE_LICENSE("GPL");
 
-struct gpio_desc *D01, *D02, *D03, *D04, *D05, *D06, *D07, *D08, *EOI, *NRFD, *IFC, *_ATN, *REN, *DAV, *NDAC, *SRQ, *ACT_LED, *PE, *DC, *TE;
+struct gpio_desc *D01, *D02, *D03, *D04, *D05, *D06, *D07, *D08, *EOI, *NRFD, *IFC, *_ATN, *REN, *DAV, *NDAC, *SRQ, *ACT_LED;
 
 /***************************************************************************
  *                                                                         *
@@ -529,9 +529,6 @@ static int __init raspi_gpib_init_module(void)
 	DAV = gpio_to_desc(DAV_gpio_nr);
 	NDAC = gpio_to_desc(NDAC_gpio_nr);
 	SRQ = gpio_to_desc(SRQ_gpio_nr);
-	PE = gpio_to_desc(PE_gpio_nr);
-	DC = gpio_to_desc(DC_gpio_nr);
-	TE = gpio_to_desc(TE_gpio_nr);
 	ACT_LED = gpio_to_desc(ACT_LED_gpio_nr);
 
 	SET_DIR_READ();
@@ -567,9 +564,6 @@ static void __exit raspi_gpib_exit_module(void)
 	gpiod_put(DAV);
 	gpiod_put(NDAC);
 	gpiod_put(SRQ);
-	gpiod_put(PE);
-	gpiod_put(DC);
-	gpiod_put(TE);
 	gpiod_put(ACT_LED);
 
 	dbg_printk("gpib_gpio module unloaded!");
@@ -663,11 +657,6 @@ inline void SET_DIR_WRITE(void)
 {
 	_delay(DELAY);
 
-	// select write mode on the SN75161/160 driver ic's
-	gpiod_direction_output(DC, 0);
-	gpiod_direction_output(PE, 1);
-	gpiod_direction_output(TE, 1);
-
 	gpiod_direction_output(DAV, 1);
 	gpiod_direction_output(EOI, 1);
 
@@ -679,10 +668,6 @@ inline void SET_DIR_WRITE(void)
 inline void SET_DIR_READ(void)
 {
 	_delay(DELAY);
-	// select read mode on the SN75161/160 driver ic's
-	gpiod_direction_output(DC, 1);
-	gpiod_direction_output(PE, 0);
-	gpiod_direction_output(TE, 0);
 
 	gpiod_direction_input(DAV);
 	gpiod_direction_input(EOI);

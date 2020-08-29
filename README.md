@@ -1,4 +1,7 @@
 # raspi_gpib_driver
+SQ5RWU: HACKET TO WORK ON ORANGE PI ZERO!
+
+
 A driver for linux-gpib to connect the Raspberry Pi to any GPIB device via its GPIO interface.
 
 Intended to be used in conjunktion with the raspi_gpib_shield (https://github.com/elektronomikon/raspi_gpib_shield)
