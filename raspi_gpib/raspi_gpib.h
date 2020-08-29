@@ -38,6 +38,8 @@
 #include <linux/gpio/consumer.h>
 #include <linux/gpio.h>
 #include <linux/timer.h>
+#include <linux/ktime.h>
+#include <linux/timekeeping.h>
 
 //  GPIB signal to GPIO pin-number mappings
 // names for rpi from /arch/arm/boot/dts/bcm2835-rpi-b-plus.dts
@@ -81,9 +83,9 @@ extern gpib_interface_t raspi_gpib_interface;
 int raspi_gpib_attach(gpib_board_t *board, const gpib_board_config_t *config);
 void raspi_gpib_detach(gpib_board_t *board);
 int raspi_gpib_line_status(const gpib_board_t *board );
-inline long int usec_diff(struct timespec *a, struct timespec *b);
-inline long int msec_diff(struct timespec *a, struct timespec *b);
-inline int sec_diff(struct timespec *a, struct timespec * b);
+inline long int usec_diff(struct timespec64 *a, struct timespec64 *b);
+inline long int msec_diff(struct timespec64 *a, struct timespec64 *b);
+inline int sec_diff(struct timespec64 *a, struct timespec64 * b);
 void set_data_lines(uint8_t byte);
 uint8_t get_data_lines(void);
 void set_data_lines_input(void);
